@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+
+	<title>常耕耘 常收获</title>
+
+
+	<meta http-equiv="Content-Security-Policy" content="script-src * 'self' 'unsafe-inline' 'unsafe-eval'  https://img.yzcdn.cn https://ssl.google-analytics.com  https://assets.zendesk.com https://connect.facebook.net;default-src 'self' data: gap: https://ssl.gstatic.com 'unsafe-eval'; style-src 'self' 'unsafe-inline'; media-src *; img-src * data: content:; connect-src *;  font-src * data: content:;frame-src https://*.qq.com webcompt:;">
+
+	<!--http://www.html5rocks.com/en/mobile/mobifying/-->
+	<meta name="viewport"
+				content="width=device-width,user-scalable=no,initial-scale=1, minimum-scale=1,maximum-scale=1"/>
+
+	<!--https://developer.apple.com/library/safari/documentation/AppleApplications/Reference/SafariHTMLRef/Articles/MetaTags.html-->
+	<meta name="apple-mobile-web-app-capable" content="yes">
+	<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+	<meta name="format-detection" content="telephone=no">
+
+	<!-- force webkit on 360 -->
+	<meta name="renderer" content="webkit"/>
+	<meta name="force-rendering" content="webkit"/>
+	<!-- force edge on IE -->
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
+	<meta name="msapplication-tap-highlight" content="no">
+
+	<!-- force full screen on some browser -->
+	<meta name="full-screen" content="yes"/>
+	<meta name="x5-fullscreen" content="true"/>
+	<meta name="360-fullscreen" content="true"/>
+	
+	<!-- force screen orientation on some browser -->
+	<meta name="screen-orientation" content=""/>
+	<meta name="x5-orientation" content="">
+
+	<!--fix fireball/issues/3568 -->
+	<!--<meta name="browsermode" content="application">-->
+	<meta name="x5-page-mode" content="app">
+
+	<!--<link rel="apple-touch-icon" href=".png" />-->
+	<!--<link rel="apple-touch-icon-precomposed" href=".png" />-->
+    <!-- 公众号 JSSDK -->
+    <script src="https://res.wx.qq.com/open/js/jweixin-1.6.0.js"></script>
+    <!-- 云开发 Web SDK -->
+    <script src="https://res.wx.qq.com/open/js/cloudbase/1.1.0/cloud.js"></script>
+
+	<link rel="stylesheet" type="text/css" href="style-mobile.css"/>
+	<link rel="icon" href="favicon.ico"/>
+</head>
+<body>
+	<canvas id="GameCanvas" oncontextmenu="event.preventDefault()" tabindex="0"></canvas>
+
+	<script type="text/javascript">
+		console.log('------测试测试111');
+		// 封装一个根据屏幕尺寸自动改变html的font-size大小的函数
+		function rem() {
+			//获取html的宽度
+			console.log('------测试测试222');
+			let htmlW = document.documentElement.clientWidth;
+			// 获取body的宽度
+			let bodyW = document.body.clientWidth;
+			// 兼容处理
+			let W = htmlW||bodyW;
+			// 设置html的font-size大小
+			// 因为设计图尺寸是750，所以平分，这样*100之后，1rem就等于100px;
+			document.documentElement.style.fontSize = (W / 750 * 100) + 'px';
+			// 定义屏幕宽度改变时触发
+			window.onresize = function () {rem()}
+			// 设置初始触发一次rem()
+		}
+		rem();
+	</script>
+
+
+	<div id="splash">
+		<div class="sp-bg"></div>
+
+		<div class="bg-top">
+			<div class="bgtopcontainer">
+				<div class="bgtopbracket"></div>
+				<div class="bgtop"></div>
+			</div>
+		</div>
+		<div class="bg-bottom">
+			<div class="bgbottomcontainer">
+				<div class="bgbottombracket"></div>
+				<div class="bgbottom"></div>
+			</div>
+		</div>
+
+
+		<div class="splash-top">
+			<div class="cloudcontainer">
+				<div class="cloudbracket"></div>
+				<div class="cloud"></div>
+			</div>
+		</div>
+		<div class="splash-bottom">
+			<div class="grasscontainer">
+				<div class="grassbracket"></div>
+				<div class="grass"></div>
+			</div>
+		</div>
+
+		<div class="progress-container">
+			<div class="changlai-container">
+				<div class="changlai"></div>
+				<div class="changwang"></div>
+				<div class="changlai"></div>
+				<div class="changwang"></div>
+			</div>
+			<div class="bar-bg"></div>
+			<!-- <div class="bar" style="width: 0%"></div> -->
+			<div class="bar"></div>
+			<div id="tips" class="tips">稍等一下...</div>
+		</div>
+	</div>
+<script src="src/settings.js" charset="utf-8"></script>
+<script src="vconsole.min.js"></script>
+<script src="main.js" charset="utf-8"></script>
+<script type="text/javascript">
+	let tips = document.getElementById('tips');
+	let count = 1;
+	setInterval(()=> {
+		if(count === 1) {
+			tips.innerText = '稍等一下.';
+		} else if(count === 2) {
+			tips.innerText = '稍等一下..';
+		} else if(count === 3) {
+			tips.innerText = '稍等一下...';
+		}
+		count++;
+		if(count >= 4) {
+			count = 1;
+		}
+	}, 300);
+
+	function checkIsWechatBrowser() {
+		let ua = navigator.userAgent.toLowerCase();
+		if (ua.match(/MicroMessenger/i) == "micromessenger"){
+			console.log("-----是微信浏览器");
+			return true; // 微信浏览器
+		}else{
+			console.log("-----非微信浏览器");
+			return false; // 非微信浏览器
+		}
+	}
+
+	function getParam(url, name){
+		if(url.indexOf('?') === -1) {
+			return null;
+		}
+		var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)");
+		var r = url.split("?")[1].match(reg);
+		if (r != null) return decodeURI(r[2]);
+		return null;
+	};
+	
+	if(checkIsWechatBrowser()) {
+		let code = getParam(window.location.href, 'code');
+		console.log('------code111', code);
+		if(code) {
+			console.log('------code222', code);
+		} else {
+			console.log('------code333', code);
+			let currentPageUrl = 'https://changshubank.sumaokeji.com/index.html';
+			// let currentPageUrl = window.location.href;
+
+			let appid = 'wxff3693cf40c5f63f';
+			// 'https://open.weixin.qq.com/connect/oauth2/authorize?appid=APPID&redirect_uri=REDIRECT_URI&response_type=code&scope=SCOPE&state=STATE#wechat_redirect';
+
+			// 'https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx520c15f417810387&redirect_uri=https%3A%2F%2Fchong.qq.com%2Fphp%2Findex.php%3Fd%3D%26c%3DwxAdapter%26m%3DmobileDeal%26showwxpaytitle%3D1%26vb2ctag%3D4_2030_5_1194_60&response_type=code&scope=snsapi_base&state=123#wechat_redirect';
+
+			// let redirectUrl = config.wechatCallbackUrl + "?frompage=" + encodeURIComponent(currentPageUrl)
+			// let linkUrl = config.wechatAuthorizeLink
+			// .replace("{APPID}", config.wechatAppId)
+			// .replace("{REDIRECT_URI}", encodeURIComponent(redirectUrl));
+
+			let linkUrl = 'https://open.weixin.qq.com/connect/oauth2/authorize?appid=' + appid 
+			+ '&redirect_uri=' + encodeURIComponent(currentPageUrl)
+			+ '&response_type=code&scope=snsapi_base' + `&state=${123}` + '#wechat_redirect';
+			window.location.href = linkUrl;
+		}
+		document.addEventListener('WeixinJSBridgeReady',function onBridgeReady(){WeixinJSBridge.call('hideOptionMenu');});
+	}
+</script>
+<script type="text/javascript">
+(function () {
+	// open web debugger console
+	if (typeof VConsole !== 'undefined') {
+			window.vConsole = new VConsole();
+	}
+
+	var debug = window._CCSettings.debug;
+	// var splash = document.getElementById('splash');
+	// splash.style.display = 'block';
+
+	function loadScript (moduleName, cb) {
+		function scriptLoaded () {
+				document.body.removeChild(domScript);
+				domScript.removeEventListener('load', scriptLoaded, false);
+				cb && cb();
+		};
+		var domScript = document.createElement('script');
+		domScript.async = true;
+		domScript.src = moduleName;
+		domScript.addEventListener('load', scriptLoaded, false);
+		document.body.appendChild(domScript);
+	}
+
+	loadScript(debug ? 'cocos2d-js.js' : 'cocos2d-js-min.js', function () {
+		if (CC_PHYSICS_BUILTIN || CC_PHYSICS_CANNON) {
+			loadScript(debug ? 'physics.js' : 'physics-min.js', window.boot);
+		}
+		else {
+			window.boot();
+		}
+	});
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,38 @@
+{
+  "ver": "2.3.7",
+  "uuid": "803a0754-54e0-466a-9d67-4de3bac693ed",
+  "importer": "texture",
+  "type": "sprite",
+  "wrapMode": "clamp",
+  "filterMode": "bilinear",
+  "premultiplyAlpha": false,
+  "genMipmaps": false,
+  "packable": true,
+  "width": 445,
+  "height": 83,
+  "platformSettings": {},
+  "subMetas": {
+    "prizeDialog_btn_jump": {
+      "ver": "1.0.6",
+      "uuid": "1a8f7678-fa7d-419f-93bb-adfb84b676d6",
+      "importer": "sprite-frame",
+      "rawTextureUuid": "803a0754-54e0-466a-9d67-4de3bac693ed",
+      "trimType": "auto",
+      "trimThreshold": 1,
+      "rotated": false,
+      "offsetX": 0,
+      "offsetY": 0,
+      "trimX": 0,
+      "trimY": 0,
+      "width": 445,
+      "height": 83,
+      "rawWidth": 445,
+      "rawHeight": 83,
+      "borderTop": 0,
+      "borderBottom": 0,
+      "borderLeft": 0,
+      "borderRight": 0,
+      "subMetas": {}
+    }
+  }
+}
